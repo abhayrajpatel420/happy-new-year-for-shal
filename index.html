@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year 2026 ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #111;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+        /* --- WATERMARK STYLE --- */
+        
+        .watermark {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            /* Thoda transparent taaki classy lage */
+            font-size: 1rem;
+            font-weight: bold;
+            z-index: 200;
+            text-shadow: 0 0 5px #00ffcc;
+            pointer-events: none;
+            /* Taaki click karne me dikkat na ho */
+        }
+        /* --- LOGIN PAGE STYLES --- */
+        
+        #login-screen {
+            position: absolute;
+            z-index: 100;
+            background: #000;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+        
+        .login-box {
+            border: 2px solid #333;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            background: #1a1a1a;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+        }
+        
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+        
+        input {
+            padding: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            background: #333;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: #00ffcc;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        
+        button:hover {
+            box-shadow: 0 0 15px #00ffcc;
+        }
+        
+        .error {
+            color: #ff3333;
+            margin-top: 10px;
+            display: none;
+        }
+        /* --- 3D GALLERY STYLES --- */
+        
+        #main-content {
+            display: none;
+            position: relative;
+            width: 200px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: spin 30s infinite linear;
+        }
+        
+        #main-content div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform-origin: center;
+        }
+        
+        #main-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            border: 2px solid white;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            pointer-events: none;
+        }
+        
+        .center-text h1 {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 0 0 20px #ff00cc;
+        }
+        
+        .center-text p {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        
+        #drag-container {
+            display: none;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(-10deg);
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="watermark">Creator: insta\abhayrajp393</div>
+
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="login-screen">
+        <div class="login-box">
+            <h2>Enter Passcode ❤️</h2>
+            <input type="password" id="passcode" placeholder="****">
+            <br>
+            <button onclick="checkPasscode()">Unlock My Heart</button>
+            <p class="error" id="error-msg">Wrong Password! Hint: Upcoming Year</p>
+        </div>
+    </div>
+
+    <div class="center-text" id="welcome-text" style="display:none;">
+        <h1>Happy New Year 2026</h1>
+        <p>Make Yoy world beautiful ✨</p>
+    </div>
+
+    <div id="drag-container">
+        <div id="main-content">
+            <div class="card"><img src="1.jpg" alt=""></div>
+            <div class="card"><img src="2.jpg" alt=""></div>
+            <div class="card"><img src="3.jpg" alt=""></div>
+            <div class="card"><img src="4.jpg" alt=""></div>
+            <div class="card"><img src="5.jpg" alt=""></div>
+            <div class="card"><img src="6.jpg" alt=""></div>
+            <div class="card"><img src="7.jpg" alt=""></div>
+            <div class="card"><img src="8.jpg" alt=""></div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const correctPasscode = "2026";
+
+        // --- LOGIN LOGIC ---
+        function checkPasscode() {
+            const input = document.getElementById('passcode').value;
+            const errorMsg = document.getElementById('error-msg');
+            const loginScreen = document.getElementById('login-screen');
+            const music = document.getElementById('bg-music');
+
+            if (input === correctPasscode) {
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    document.getElementById('drag-container').style.display = 'flex';
+                    document.getElementById('main-content').style.display = 'block';
+                    document.getElementById('welcome-text').style.display = 'block';
+                    initGallery();
+
+                    // Music yahan play hoga
+                    music.play().catch(e => console.log("Audio play failed. Interaction needed."));
+                }, 1000);
+            } else {
+                errorMsg.style.display = 'block';
+                document.querySelector('.login-box').style.animation = "shake 0.5s";
+                setTimeout(() => document.querySelector('.login-box').style.animation = "", 500);
+            }
+        }
+
+        // --- 3D GALLERY LOGIC ---
+        function initGallery() {
+            const container = document.getElementById('main-content');
+            const cards = container.getElementsByClassName('card');
+            const radius = 320;
+
+            for (let i = 0; i < cards.length; i++) {
+                cards[i].style.transform = `rotateY(${i * (360 / cards.length)}deg) translateZ(${radius}px)`;
+            }
+        }
+
+        document.getElementById("passcode").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") checkPasscode();
+        });
+
+        let isDragging = false;
+        let startX;
+        const mainContent = document.getElementById('main-content');
+
+        document.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            mainContent.style.animation = 'none';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            mainContent.style.animation = 'spin 30s infinite linear';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - startX;
+            mainContent.style.transform = `rotateY(${dx * 0.5}deg)`;
+        });
+    </script>
+    <style>
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-10px);
+            }
+            50% {
+                transform: translateX(10px);
+            }
+            75% {
+                transform: translateX(-10px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</body>
+
+</html>
