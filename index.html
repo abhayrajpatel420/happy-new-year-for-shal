@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,38 +10,23 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            background: #111;
+            background: #000;
             color: white;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            perspective: 1000px;
+            perspective: 1000px; /* 3D effect depth */
         }
-        /* --- WATERMARK STYLE --- */
-        
-        .watermark {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            color: rgba(255, 255, 255, 0.4);
-            /* Thoda transparent taaki classy lage */
-            font-size: 1rem;
-            font-weight: bold;
-            z-index: 200;
-            text-shadow: 0 0 5px #00ffcc;
-            pointer-events: none;
-            /* Taaki click karne me dikkat na ho */
-        }
-        /* --- LOGIN PAGE STYLES --- */
-        
+
+        /* --- LOGIN SCREEN --- */
         #login-screen {
             position: absolute;
-            z-index: 100;
+            z-index: 1000;
             background: #000;
             width: 100%;
             height: 100%;
@@ -52,132 +36,154 @@
             align-items: center;
             transition: opacity 1s ease;
         }
-        
+
         .login-box {
-            border: 2px solid #333;
+            border: 1px solid #333;
             padding: 40px;
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
-            background: #1a1a1a;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            background: rgba(20, 20, 20, 0.9);
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
         }
-        
+
         .login-box h2 {
             margin-bottom: 20px;
             color: #00ffcc;
-            text-shadow: 0 0 10px #00ffcc;
+            letter-spacing: 2px;
         }
-        
+
         input {
-            padding: 10px;
+            padding: 12px;
             font-size: 1.2rem;
             text-align: center;
-            background: #333;
-            border: none;
+            background: #222;
+            border: 1px solid #444;
             color: white;
-            border-radius: 5px;
-            margin-bottom: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
             outline: none;
+            width: 200px;
         }
-        
+
         button {
-            padding: 10px 20px;
+            padding: 12px 30px;
             font-size: 1rem;
-            background: #00ffcc;
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
             border: none;
             color: #000;
             font-weight: bold;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 30px;
             transition: 0.3s;
         }
-        
+
         button:hover {
-            box-shadow: 0 0 15px #00ffcc;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00ffcc;
         }
-        
+
         .error {
-            color: #ff3333;
-            margin-top: 10px;
+            color: #ff4444;
+            margin-top: 15px;
+            font-size: 0.9rem;
             display: none;
         }
-        /* --- 3D GALLERY STYLES --- */
-        
-        #main-content {
-            display: none;
+
+        /* --- 3D GALLERY CONTAINER --- */
+        #drag-container {
+            display: none; /* Initially hidden */
             position: relative;
-            width: 200px;
-            height: 300px;
+            display: flex;
+            margin: auto;
             transform-style: preserve-3d;
-            animation: spin 30s infinite linear;
+            transform: rotateX(-10deg); /* Thoda tilt taaki piche ki photos dikhein */
         }
-        
-        #main-content div {
+
+        #spin-container {
+            position: relative;
+            display: flex;
+            margin: auto;
+            width: 200px; /* Card width */
+            height: 300px; /* Card height */
+            transform-style: preserve-3d;
+            animation: spinRevert 30s infinite linear;
+        }
+
+        /* Photos Styling */
+        #spin-container img {
+            transform-style: preserve-3d;
             position: absolute;
-            top: 0;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            transform-style: preserve-3d;
-            transform-origin: center;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            object-fit: cover; /* Photo kate nahi, adjust ho jaye */
+            -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, rgba(0,0,0,0.2)); /* Reflection */
         }
+
+        /* --- TEXT PLACEMENT --- */
         
-        #main-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            border: 2px solid white;
-            -webkit-user-drag: none;
-            user-select: none;
-        }
-        
-        .center-text {
+        /* 1. Watermark (Center & Thoda Upar) */
+        .watermark-text {
             position: absolute;
-            top: 50%;
+            top: 38%; /* Center se thoda upar */
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            width: 100%;
+            color: #fff;
+            z-index: 0;
             pointer-events: none;
-        }
-        
-        .center-text h1 {
-            font-size: 3rem;
-            color: white;
-            text-shadow: 0 0 20px #ff00cc;
-        }
-        
-        .center-text p {
-            margin-top: 10px;
-            font-size: 1.2rem;
-            color: #ccc;
-        }
-        
-        #drag-container {
             display: none;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transform: rotateX(-10deg);
         }
         
-        @keyframes spin {
-            from {
-                transform: rotateY(0deg);
-            }
-            to {
-                transform: rotateY(360deg);
-            }
+        .watermark-text h2 {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.1); /* Halka dikhega */
+            font-family: 'Brush Script MT', cursive;
+            text-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
         }
+
+        /* 2. Happy New Year (Bottom Niche) */
+        .bottom-message {
+            position: absolute;
+            bottom: 5%; /* Niche rakha hai */
+            left: 0;
+            width: 100%;
+            text-align: center;
+            display: none;
+            z-index: 100;
+        }
+
+        .bottom-message h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #ff00cc, #3333ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .bottom-message p {
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        /* Animation */
+        @keyframes spin {
+            from { transform: rotateY(0deg); }
+            to{ transform: rotateY(360deg); }
+        }
+        @keyframes spinRevert {
+            from { transform: rotateY(360deg); }
+            to{ transform: rotateY(0deg); }
+        }
+
     </style>
 </head>
-
 <body>
-
-    <div class="watermark">Creator: insta\abhayrajp393</div>
 
     <audio id="bg-music" loop>
         <source src="song.mp3" type="audio/mpeg">
@@ -188,32 +194,38 @@
             <h2>Enter Passcode ❤️</h2>
             <input type="password" id="passcode" placeholder="****">
             <br>
-            <button onclick="checkPasscode()">Unlock My Heart</button>
-            <p class="error" id="error-msg">Wrong Password! Hint: Upcoming Year</p>
+            <button onclick="checkPasscode()">Unlock Surprise</button>
+            <p class="error" id="error-msg">Wrong Password!</p>
         </div>
     </div>
 
-    <div class="center-text" id="welcome-text" style="display:none;">
-        <h1>Happy New Year 2026</h1>
-        <p>Make Yoy world beautiful ✨</p>
+    <div class="watermark-text" id="watermark">
+        <h2>My Love</h2>
     </div>
 
     <div id="drag-container">
-        <div id="main-content">
-            <div class="card"><img src="1.jpg" alt=""></div>
-            <div class="card"><img src="2.jpg" alt=""></div>
-            <div class="card"><img src="3.jpg" alt=""></div>
-            <div class="card"><img src="4.jpg" alt=""></div>
-            <div class="card"><img src="5.jpg" alt=""></div>
-            <div class="card"><img src="6.jpg" alt=""></div>
-            <div class="card"><img src="7.jpg" alt=""></div>
-            <div class="card"><img src="8.jpg" alt=""></div>
+        <div id="spin-container">
+            <img src="photo1.jpg" alt="">
+            <img src="photo2.jpg" alt="">
+            <img src="photo3.jpg" alt="">
+            <img src="photo4.jpg" alt="">
+            <img src="photo5.jpg" alt="">
+            <img src="photo6.jpg" alt="">
         </div>
+        <div id="ground"></div>
+    </div>
+
+    <div class="bottom-message" id="bottom-msg">
+        <h1>Happy New Year 2026</h1>
+        <p>Another year of loving you ❤️</p>
     </div>
 
     <script>
         // --- CONFIGURATION ---
-        const correctPasscode = "2026";
+        const correctPasscode = "2026"; 
+        const radius = 280; // Circle ka size bada kiya (photos dur dur hongi)
+        const autoRotate = true; 
+        const rotateSpeed = -60; // Seconds per rotation
 
         // --- LOGIN LOGIC ---
         function checkPasscode() {
@@ -227,75 +239,91 @@
                 setTimeout(() => {
                     loginScreen.style.display = 'none';
                     document.getElementById('drag-container').style.display = 'flex';
-                    document.getElementById('main-content').style.display = 'block';
-                    document.getElementById('welcome-text').style.display = 'block';
-                    initGallery();
-
-                    // Music yahan play hoga
-                    music.play().catch(e => console.log("Audio play failed. Interaction needed."));
+                    document.getElementById('watermark').style.display = 'block';
+                    document.getElementById('bottom-msg').style.display = 'block';
+                    
+                    initCarousel(radius);
+                    
+                    music.play().catch(e => console.log("Click required for music"));
                 }, 1000);
             } else {
                 errorMsg.style.display = 'block';
-                document.querySelector('.login-box').style.animation = "shake 0.5s";
-                setTimeout(() => document.querySelector('.login-box').style.animation = "", 500);
             }
         }
 
-        // --- 3D GALLERY LOGIC ---
-        function initGallery() {
-            const container = document.getElementById('main-content');
-            const cards = container.getElementsByClassName('card');
-            const radius = 320;
+        // --- 3D CAROUSEL LOGIC ---
+        function initCarousel(radiusValue) {
+            var odrag = document.getElementById('drag-container');
+            var ospin = document.getElementById('spin-container');
+            var aImg = ospin.getElementsByTagName('img');
+            var aEle = [...aImg]; 
 
-            for (let i = 0; i < cards.length; i++) {
-                cards[i].style.transform = `rotateY(${i * (360 / cards.length)}deg) translateZ(${radius}px)`;
+            ospin.style.width = "200px"; // Card Width
+            ospin.style.height = "300px"; // Card Height
+
+            for (var i = 0; i < aEle.length; i++) {
+                // Circle calculation
+                aEle[i].style.transform = "rotateY(" + (i * (360 / aEle.length)) + "deg) translateZ(" + radiusValue + "px)";
+                aEle[i].style.transition = "transform 1s";
             }
         }
 
+        // --- MOUSE DRAG ROTATION ---
+        document.onpointerdown = function (e) {
+            clearInterval(odrag.timer);
+            e = e || window.event;
+            var sX = e.clientX, sY = e.clientY;
+
+            this.onpointermove = function (e) {
+                e = e || window.event;
+                var nX = e.clientX, nY = e.clientY;
+                var desX = nX - sX;
+                var desY = nY - sY;
+                tX += desX * 0.1;
+                tY += desY * 0.1;
+                applyTransform(odrag);
+                sX = nX;
+                sY = nY;
+            };
+
+            this.onpointerup = function (e) {
+                odrag.timer = setInterval(function () {
+                    desX *= 0.95;
+                    desY *= 0.95;
+                    tX += desX * 0.1;
+                    tY += desY * 0.1;
+                    applyTransform(odrag);
+                    playSpin(false);
+                    if (Math.abs(desX) < 0.5 && Math.abs(desY) < 0.5) {
+                        clearInterval(odrag.timer);
+                        playSpin(true);
+                    }
+                }, 17);
+                this.onpointermove = this.onpointerup = null;
+            };
+            return false;
+        };
+
+        var odrag = document.getElementById('drag-container');
+        var ospin = document.getElementById('spin-container');
+        var tX = 0, tY = 0; // Rotate angles (Default 0) -- Tilt fixed in CSS
+
+        function applyTransform(obj) {
+            // Hum sirf Y-axis rotate kar rahe hain drag par, tilt CSS me fix hai
+            if(tY > 180) tY = 180;
+            if(tY < 0) tY = 0;
+            obj.style.transform = "rotateX(-10deg) rotateY(" + (tX) + "deg)";
+        }
+
+        function playSpin(yes) {
+            ospin.style.animationPlayState = (yes ? 'running' : 'paused');
+        }
+
+        // Enter key support
         document.getElementById("passcode").addEventListener("keypress", function(event) {
             if (event.key === "Enter") checkPasscode();
         });
 
-        let isDragging = false;
-        let startX;
-        const mainContent = document.getElementById('main-content');
-
-        document.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            mainContent.style.animation = 'none';
-        });
-
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            mainContent.style.animation = 'spin 30s infinite linear';
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            const dx = e.clientX - startX;
-            mainContent.style.transform = `rotateY(${dx * 0.5}deg)`;
-        });
     </script>
-    <style>
-        @keyframes shake {
-            0% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-10px);
-            }
-            50% {
-                transform: translateX(10px);
-            }
-            75% {
-                transform: translateX(-10px);
-            }
-            100% {
-                transform: translateX(0);
-            }
-        }
-    </style>
 </body>
-
 </html>
