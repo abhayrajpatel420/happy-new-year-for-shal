@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Republic Day Celebration | India 77th Republic Day</title>
+    <style>
+        /* --- GENERAL RESET --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* --- COLORS --- */
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --blue: #000080;
+            --dark: #1a1a1a;
+        }
+
+        /* --- INTRO SCREEN (Black Splash) --- */
+        #intro-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #000; color: white; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 1000;
+            transition: opacity 1s ease;
+        }
+        .firework { position: absolute; width: 5px; height: 5px; background: transparent; }
+        #intro-content { z-index: 2; text-align: center; }
+        #intro-content h1 { font-size: 3rem; margin-bottom: 10px; }
+        #intro-content p { color: #ccc; margin-bottom: 30px; }
+        .enter-btn {
+            padding: 12px 30px; background: transparent; border: 2px solid var(--saffron);
+            color: var(--saffron); font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+            border-radius: 30px; text-transform: uppercase; letter-spacing: 2px;
+        }
+        .enter-btn:hover { background: var(--saffron); color: white; box-shadow: 0 0 15px var(--saffron); }
+
+        /* --- MAIN WEBSITE --- */
+        #main-site { display: none; opacity: 0; transition: opacity 1s ease; }
+        
+        /* Navbar */
+        nav {
+            display: flex; justify-content: space-between; align-items: center; padding: 20px 50px;
+            background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--blue); }
+        .logo span { color: var(--saffron); }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: #333; font-weight: 500; }
+        .nav-links a:hover { color: var(--saffron); }
+
+        /* Hero Section (Flag) */
+        header {
+            text-align: center; padding: 60px 20px; background: #f9f9f9; min-height: 80vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        
+        /* CSS ANIMATED FLAG */
+        .flag-container {
+            width: 300px; height: 200px; margin: 0 auto 40px;
+            position: relative; perspective: 1000px; transform-style: preserve-3d;
+        }
+        .flag {
+            width: 100%; height: 100%; position: relative;
+            animation: wave 3s ease-in-out infinite alternate;
+            box-shadow: 0 15px 20px rgba(0,0,0,0.2);
+        }
+        .stripe { width: 100%; height: 33.33%; }
+        .saffron { background: var(--saffron); }
+        .white { background: var(--white); position: relative; display: flex; justify-content: center; align-items: center; }
+        .green { background: var(--green); }
+        
+        .chakra {
+            width: 60px; height: 60px; border: 2px solid var(--blue); border-radius: 50%;
+            position: relative; animation: spin 10s linear infinite;
+        }
+        .chakra::after {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 4px; height: 4px; background: var(--blue); border-radius: 50%;
+        }
+        .spoke {
+            position: absolute; top: 0; left: 28px; width: 2px; height: 100%; background: var(--blue);
+        }
+        
+        /* Flag Animations */
+        @keyframes wave {
+            0% { transform: rotateY(-5deg) skewY(2deg); }
+            100% { transform: rotateY(5deg) skewY(-2deg); }
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Hero Text */
+        header h1 { font-size: 2.5rem; margin-bottom: 15px; color: #222; }
+        .highlight { color: var(--saffron); }
+        .highlight-g { color: var(--green); }
+        header p { color: #666; max-width: 600px; margin: 0 auto 30px; }
+        .cta-btn {
+            padding: 12px 30px; background: linear-gradient(45deg, var(--saffron), #ff7700);
+            color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer;
+            text-decoration: none; box-shadow: 0 5px 15px rgba(255, 153, 51, 0.4);
+        }
+
+        /* --- CARDS SECTION --- */
+        .section-title { text-align: center; font-size: 2rem; margin: 60px 0 40px; }
+        .cards-container {
+            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; padding: 0 20px;
+        }
+        .card {
+            background: white; width: 300px; padding: 25px; border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border-top: 4px solid var(--saffron);
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card h3 { margin-bottom: 15px; color: var(--blue); }
+        
+        /* --- GALLERY (Simple Grid) --- */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px; padding: 0 50px 60px;
+        }
+        .gallery-item {
+            height: 200px; background: #ddd; border-radius: 8px; overflow: hidden; position: relative;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* --- QUIZ SECTION --- */
+        #quiz { background: #f4f6f8; padding: 60px 20px; text-align: center; }
+        .quiz-box {
+            background: white; max-width: 600px; margin: 0 auto; padding: 30px;
+            border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .question { font-size: 1.2rem; margin-bottom: 25px; font-weight: 600; }
+        .options button {
+            display: block; width: 100%; padding: 12px; margin-bottom: 10px;
+            border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;
+            text-align: left; transition: 0.2s;
+        }
+        .options button:hover { background: #f0f0f0; }
+        .options button.correct { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .options button.wrong { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        #next-btn {
+            margin-top: 20px; padding: 10px 25px; background: var(--blue); color: white;
+            border: none; border-radius: 5px; cursor: pointer; display: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark); color: white; text-align: center; padding: 40px 20px;
+        }
+        .quote { font-style: italic; color: #aaa; margin-bottom: 20px; }
+        .heart { color: red; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; } /* Simplified for mobile */
+            header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen">
+        <canvas id="fireworksCanvas" style="position: absolute; top:0; left:0; width:100%; height:100%;"></canvas>
+        <div id="intro-content">
+            <h1>Happy Republic Day <span style="color:var(--saffron)">IN</span></h1>
+            <p>26 January - The Pride of India</p>
+            <button class="enter-btn" onclick="enterSite()">Jai Hind (Enter)</button>
+        </div>
+    </div>
+
+    <div id="main-site">
+        <nav>
+            <div class="logo">India<span>77RD</span></div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#history">History</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#quiz">Quiz</a>
+            </div>
+        </nav>
+
+        <header id="home">
+            <div class="flag-container">
+                <div class="flag">
+                    <div class="stripe saffron"></div>
+                    <div class="stripe white">
+                        <div class="chakra" id="chakra"></div>
+                    </div>
+                    <div class="stripe green"></div>
+                </div>
+            </div>
+            <h1>Celebrating the Spirit of <br><span class="highlight">Unity</span> & <span class="highlight-g">Democracy</span></h1>
+            <p>Honoring the day the Constitution of India came into effect.</p>
+            <a href="#history" class="cta-btn">Explore History</a>
+        </header>
+
+        <section id="history">
+            <h2 class="section-title">Why We Celebrate</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <h3>The Constitution</h3>
+                    <p>The Constitution of India came into effect on January 26, 1950, replacing the Government of India Act (1935).</p>
+                </div>
+                <div class="card" style="border-top-color: var(--white); border-top-width: 4px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1);">
+                    <h3>Purna Swaraj</h3>
+                    <p>It was on this day in 1930 when the Declaration of Indian Independence (Purna Swaraj) was proclaimed.</p>
+                </div>
+                <div class="card" style="border-top-color: var(--green);">
+                    <h3>Rajpath Parade</h3>
+                    <p>The main celebration is held in New Delhi at the Kartavya Path with a grand parade showcasing India's power.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery">
+            <h2 class="section-title">Glimpses of Glory</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=600" alt="India Gate"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600" alt="Flag"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1605656816944-971cd5c1407f?auto=format&fit=crop&w=600" alt="Parade"></div>
+            </div>
+        </section>
+
+        <section id="quiz">
+            <h2 class="section-title">Republic Day Quiz</h2>
+            <div class="quiz-box">
+                <p id="progress">Question 1 of 2</p>
+                <div class="question" id="question-text">Loading...</div>
+                <div class="options" id="options-container"></div>
+                <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+            </div>
+        </section>
+
+        <footer>
+            <p class="quote">"Freedom is not given - it is taken. Be proud to be an Indian."</p>
+            <p>Made with <span class="heart">❤</span> by You</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- CHAKRA SPOKES GENERATION ---
+        const chakra = document.getElementById('chakra');
+        for(let i=0; i<12; i++) { // Creating 24 spokes (12 lines crossing)
+            let spoke = document.createElement('div');
+            spoke.className = 'spoke';
+            spoke.style.transform = `rotate(${i * 15}deg)`;
+            chakra.appendChild(spoke);
+        }
+
+        // --- ENTER SITE LOGIC ---
+        function enterSite() {
+            document.getElementById('intro-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-screen').style.display = 'none';
+                document.getElementById('main-site').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('main-site').style.opacity = '1';
+                }, 50);
+            }, 1000);
+        }
+
+        // --- SIMPLE CANVAS FIREWORKS (Visual Effect) ---
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = [];
+        
+        function createParticle(x, y, color) {
+            for(let i=0; i<5; i++) {
+                particles.push({x, y, vx: (Math.random()-0.5)*4, vy: (Math.random()-0.5)*4, alpha: 1, color});
+            }
+        }
+        
+        function animateFireworks() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.x += p.vx; p.y += p.vy; p.alpha -= 0.02;
+                ctx.fillStyle = p.color; ctx.globalAlpha = p.alpha;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
+                if(p.alpha <= 0) particles.splice(index, 1);
+            });
+            if(Math.random() < 0.05) {
+                const colors = ['#FF9933', '#FFFFFF', '#138808'];
+                createParticle(Math.random()*canvas.width, Math.random()*canvas.height, colors[Math.floor(Math.random()*3)]);
+            }
+            requestAnimationFrame(animateFireworks);
+        }
+        animateFireworks();
+
+        // --- QUIZ LOGIC ---
+        const questions = [
+            {
+                q: "When did the Constitution of India come into effect?",
+                options: ["26 Nov 1949", "15 Aug 1947", "26 Jan 1950", "2 Oct 1948"],
+                correct: 2
+            },
+            {
+                q: "Who was the Chairman of the Drafting Committee?",
+                options: ["Jawaharlal Nehru", "Dr. B.R. Ambedkar", "Sardar Patel", "Dr. Rajendra Prasad"],
+                correct: 1
+            }
+        ];
+
+        let currentQ = 0;
+        const qText = document.getElementById('question-text');
+        const optsDiv = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        const progress = document.getElementById('progress');
+
+        function loadQuestion() {
+            const data = questions[currentQ];
+            qText.innerText = data.q;
+            optsDiv.innerHTML = '';
+            progress.innerText = `Question ${currentQ + 1} of ${questions.length}`;
+            nextBtn.style.display = 'none';
+
+            data.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(btn, index, data.correct);
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(btn, index, correctIndex) {
+            const buttons = optsDiv.querySelectorAll('button');
+            buttons.forEach(b => b.disabled = true); // Disable all
+            
+            if (index === correctIndex) {
+                btn.classList.add('correct');
+                btn.innerHTML += " ✅ Correct!";
+            } else {
+                btn.classList.add('wrong');
+                buttons[correctIndex].classList.add('correct');
+            }
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < questions.length) {
+                loadQuestion();
+            } else {
+                qText.innerText = "Quiz Completed! Happy Republic Day!";
+                optsDiv.innerHTML = '';
+                nextBtn.style.display = 'none';
+                progress.innerText = "";
+            }
+        }
+
+        loadQuestion(); // Start Quiz
+    </script>
+</body>
+</html>
