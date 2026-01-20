@@ -356,3 +356,379 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+lllllllllllllllll
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year 2026 ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+        /* --- LOGIN SCREEN --- */
+        
+        #login-screen {
+            position: absolute;
+            z-index: 1000;
+            background: #000;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+        
+        .login-box {
+            border: 1px solid #333;
+            padding: 30px;
+            /* Mobile ke liye padding thodi kam ki */
+            border-radius: 15px;
+            text-align: center;
+            background: rgba(20, 20, 20, 0.9);
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
+            position: relative;
+            z-index: 1001;
+        }
+        
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: #00ffcc;
+            letter-spacing: 2px;
+            font-size: 1.5rem;
+            /* Font size mobile adjust */
+        }
+        
+        input {
+            padding: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            outline: none;
+            width: 80%;
+            /* Width flexible ki */
+            position: relative;
+            z-index: 1002;
+        }
+        
+        button {
+            padding: 12px 30px;
+            font-size: 1rem;
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.3s;
+            position: relative;
+            z-index: 1002;
+        }
+        
+        .error {
+            color: #ff4444;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        /* --- 3D GALLERY CONTAINER --- */
+        
+        #drag-container {
+            display: none;
+            position: relative;
+            display: flex;
+            margin: auto;
+            transform-style: preserve-3d;
+            transform: rotateX(-10deg);
+            /* --- UPDATE: Mobile ke liye Gola Upar Kiya --- */
+            top: 50px;
+        }
+        
+        #spin-container {
+            position: relative;
+            display: flex;
+            margin: auto;
+            width: 200px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: spinRevert 30s infinite linear;
+        }
+        
+        #spin-container img {
+            transform-style: preserve-3d;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            object-fit: cover;
+            -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.2));
+        }
+        /* --- TEXT PLACEMENT --- */
+        
+        .watermark-text {
+            position: absolute;
+            /* --- UPDATE: Watermark Upar Kiya --- */
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            z-index: 0;
+            pointer-events: none;
+            display: none;
+            width: 100%;
+        }
+        
+        .watermark-text h2 {
+            font-size: 3rem;
+            /* Mobile ke liye font thoda chota */
+            color: rgba(255, 255, 255, 0.1);
+            font-family: 'Brush Script MT', cursive;
+            text-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
+        }
+        
+        .bottom-message {
+            position: absolute;
+            bottom: 30px;
+            /* Thoda margin diya niche se */
+            left: 0;
+            width: 100%;
+            text-align: center;
+            display: none;
+            z-index: 100;
+        }
+        
+        .bottom-message h1 {
+            font-size: 2rem;
+            background: linear-gradient(to right, #ff00cc, #3333ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+            margin-bottom: 5px;
+        }
+        
+        .bottom-message p {
+            color: #ccc;
+            font-size: 1rem;
+        }
+        /* --- NEW HOST TEXT STYLE --- */
+        
+        .host-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8rem !important;
+            color: #555 !important;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+        
+        @keyframes spinRevert {
+            from {
+                transform: rotateY(360deg);
+            }
+            to {
+                transform: rotateY(0deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="login-screen">
+        <div class="login-box">
+            <h2>Enter Passcode ❤️</h2>
+            <input type="password" id="passcode" placeholder="****">
+            <br>
+            <button onclick="checkPasscode()">Unlock Surprise</button>
+            <p class="error" id="error-msg">Wrong Password!</p>
+        </div>
+    </div>
+
+    <div class="watermark-text" id="watermark">
+        <h2>Happy New Year 2026</h2>
+    </div>
+
+    <div id="drag-container">
+        <div id="spin-container">
+            <img src="1.jpg" alt="">
+            <img src="2.jpg" alt="">
+            <img src="3.jpg" alt="">
+            <img src="4.jpg" alt="">
+            <img src="5.jpg" alt="">
+            <img src="6.jpg" alt="">
+            <img src="7.jpg" alt="">
+            <img src="8.jpg" alt="">
+        </div>
+        <div id="ground"></div>
+    </div>
+
+    <div class="bottom-message" id="bottom-msg">
+        <h1>That's All For This Year</h1>
+        <p>Another year of loving you ❤️</p>
+        <p class="host-text">host//abhayrajp393</p>
+    </div>
+
+    <script>
+        const correctPasscode = "2026";
+        const radius = 300;
+
+        // --- LOGIN LOGIC ---
+        function checkPasscode() {
+            var input = document.getElementById('passcode').value;
+            input = input.trim();
+
+            const errorMsg = document.getElementById('error-msg');
+            const loginScreen = document.getElementById('login-screen');
+            const music = document.getElementById('bg-music');
+
+            if (input === correctPasscode) {
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    document.getElementById('drag-container').style.display = 'flex';
+                    document.getElementById('watermark').style.display = 'block';
+                    document.getElementById('bottom-msg').style.display = 'block';
+
+                    initCarousel(radius);
+                    music.play().catch(e => console.log("Click required for music"));
+                }, 1000);
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        // --- 3D CAROUSEL LOGIC ---
+        function initCarousel(radiusValue) {
+            var ospin = document.getElementById('spin-container');
+            var aImg = ospin.getElementsByTagName('img');
+            var aEle = [...aImg];
+
+            ospin.style.width = "200px";
+            ospin.style.height = "300px";
+
+            for (var i = 0; i < aEle.length; i++) {
+                aEle[i].style.transform = "rotateY(" + (i * (360 / aEle.length)) + "deg) translateZ(" + radiusValue + "px)";
+                aEle[i].style.transition = "transform 1s";
+            }
+        }
+
+        // --- MOUSE DRAG ROTATION ---
+        var odrag = document.getElementById('drag-container');
+        var ospin = document.getElementById('spin-container');
+        var tX = 0,
+            tY = 0;
+
+        document.onpointerdown = function(e) {
+            // FIX: Allow click on input field
+            if (document.getElementById('login-screen').style.display !== 'none') {
+                return true;
+            }
+
+            clearInterval(odrag.timer);
+            e = e || window.event;
+            var sX = e.clientX,
+                sY = e.clientY;
+
+            this.onpointermove = function(e) {
+                e = e || window.event;
+                var nX = e.clientX,
+                    nY = e.clientY;
+                var desX = nX - sX;
+                var desY = nY - sY;
+                tX += desX * 0.1;
+                tY += desY * 0.1;
+                applyTransform(odrag);
+                sX = nX;
+                sY = nY;
+            };
+
+            this.onpointerup = function(e) {
+                odrag.timer = setInterval(function() {
+                    desX *= 0.95;
+                    desY *= 0.95;
+                    tX += desX * 0.1;
+                    tY += desY * 0.1;
+                    applyTransform(odrag);
+                    playSpin(false);
+                    if (Math.abs(desX) < 0.5 && Math.abs(desY) < 0.5) {
+                        clearInterval(odrag.timer);
+                        playSpin(true);
+                    }
+                }, 17);
+                this.onpointermove = this.onpointerup = null;
+            };
+            return false;
+        };
+
+        function applyTransform(obj) {
+            if (tY > 180) tY = 180;
+            if (tY < 0) tY = 0;
+            obj.style.transform = "rotateX(-10deg) rotateY(" + (tX) + "deg)";
+        }
+
+        function playSpin(yes) {
+            ospin.style.animationPlayState = (yes ? 'running' : 'paused');
+        }
+
+        document.getElementById("passcode").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") checkPasscode();
+        });
+    </script>
+</body>
+
+</html>
